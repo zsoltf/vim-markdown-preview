@@ -1,8 +1,6 @@
 [X] styles
-	[X] include a separate print stylesheet
-	: at the moment, printed page is completely blank
-	[X] emulate Safari Reader
-	[X] move stylesheet from 'plugin' to 'stylesheets'
+	[_] remove Reader page boundaries
+	[_] reposition Reader scroll bar
 [_] PDF
 	[_] include PDF option
 	: i.e. as an alternative to HTML
