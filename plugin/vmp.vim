@@ -1,4 +1,4 @@
-function! PreviewMKD()
+function! PreviewMKD(pdf)
   ruby << RUBY
 
 
@@ -53,14 +53,25 @@ function! PreviewMKD()
     else
       file = File.join('/tmp', File.basename(name) + '.html')
       File.open('%s' % [ file ], 'w') { |f| f.write(layout) }
-      # Open the html file
-      # Vim.command("silent !open '%s'" % [ file ])
-      # Create and open a PDF file
+    end
+RUBY
+    " This is ghastly! 
+    " Not sure how to access a:pdf argument directly in Ruby
+    if a:pdf
+ruby << RUBY
       pdffile = File.join('/tmp', File.basename(name) + '.pdf')
       system("wkpdf --source #{file} --output #{pdffile}")
       Vim.command("silent !open '%s'" % [ pdffile ])
-    end
 RUBY
+    else
+ruby << RUBY
+      Vim.command("silent !open '%s'" % [ file ])
+RUBY
+    endif
 endfunction
 
-:command! Mm :call PreviewMKD()
+:command! Mm :call PreviewMKD(0)
+:command! Mp :call PreviewMKD(1)
+
+nmap <D-r> :Mm<CR>
+nmap <D-P> :Mp<CR>
